@@ -18,7 +18,7 @@ import org.tbwork.anole.common.message.MessageType;
 import org.tbwork.anole.common.message.c_2_s.CommonAuthenticationMessage;
 import org.tbwork.anole.common.message.s_2_c.AuthFailAndCloseMessage;
 import org.tbwork.anole.common.message.s_2_c.AuthPassWithTokenMessage;
-import org.tbwork.anole.loader.core.Anole;
+import org.tbwork.anole.loader.context.Anole;
 import org.tbwork.anole.publisher.client.IAnolePublisherClient;
 import org.tbwork.anole.publisher.client.StaticClientConfig;
 import org.tbwork.anole.publisher.client.impl.AnolePublisherClient; 

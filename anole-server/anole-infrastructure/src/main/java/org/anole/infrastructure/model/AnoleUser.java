@@ -1,3 +1,6 @@
+/*
+ - Copyright 1999-2016 Shanghai XiangTu Network Technology Co. Limit
+*/
 package org.anole.infrastructure.model;
 
 import java.util.Date;

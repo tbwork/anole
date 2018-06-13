@@ -13,7 +13,7 @@ import org.tbwork.anole.common.message.MessageType;
 import org.tbwork.anole.common.message.c_2_s.CommonAuthenticationMessage;
 import org.tbwork.anole.common.message.c_2_s.subscriber._2_boss.S2BCommonAuthenticationMessage;
 import org.tbwork.anole.common.message.s_2_c.boss.AssignedWorkerInfoMessage;
-import org.tbwork.anole.loader.core.Anole; 
+import org.tbwork.anole.loader.context.Anole;
 import org.tbwork.anole.subscriber.client._2_boss.impl.AnoleAuthenticationClient;
 import org.tbwork.anole.subscriber.client._2_worker.impl.AnoleSubscriberClient;
 import org.tbwork.anole.subscriber.core.AnoleClient; 

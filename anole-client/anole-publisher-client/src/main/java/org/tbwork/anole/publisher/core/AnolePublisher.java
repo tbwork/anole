@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tbwork.anole.common.message.c_2_s.publisher_2_boss.ModifyConfigMessage;
 import org.tbwork.anole.common.model.ConfigModifyResultDTO;
-import org.tbwork.anole.loader.core.Anole;
+import org.tbwork.anole.loader.context.Anole;
 import org.tbwork.anole.publisher.client.IAnolePublisherClient;
 import org.tbwork.anole.publisher.client.StaticClientConfig;
 import org.tbwork.anole.publisher.client.impl.AnolePublisherClient;

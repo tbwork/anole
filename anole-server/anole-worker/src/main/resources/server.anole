@@ -1,0 +1,5 @@
+#env:all 
+#server configuration
+anole.server.boss.4publisher.port=54321,54322
+anole.server.boss.4subscriber.port=54323,54324
+anole.server.boss.4worker.port=54325,54326

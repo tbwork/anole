@@ -1,7 +1,7 @@
 package org.tbwork.anole.subscriber.core;
  
- 
-import org.tbwork.anole.loader.core.Anole; 
+  
+import org.tbwork.anole.loader.context.Anole;
 import org.tbwork.anole.subscriber.core.impl.ChainedConfigObserver;
 import org.tbwork.anole.subscriber.core.impl.SubscriberConfigManager; 
  

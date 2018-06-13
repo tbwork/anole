@@ -12,10 +12,10 @@
   <modules>
   	<module>anole-hub</module> 
     <module>anole-infrastructure</module>
+    <module>anole-server-basic</module>
   </modules>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <netty.version>5.0.0.Alpha1</netty.version>
     <junit.version>4.12</junit.version>
     <anole.common.version>0.0.1-SNAPSHOT</anole.common.version> 
     <logback.version>1.1.7</logback.version> 
@@ -29,12 +29,7 @@
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>io.netty</groupId>
-        <artifactId>netty-all</artifactId>
-        <version>${netty.version}</version>
-    </dependency>
+    </dependency> 
     <dependency>
         <groupId>org.tbwork.anole</groupId>
         <artifactId>anole-common</artifactId>

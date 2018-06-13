@@ -1,3 +1,6 @@
+/*
+ - Copyright 1999-2016 Shanghai XiangTu Network Technology Co. Limit
+*/
 package org.anole.infrastructure.model;
 
 import java.util.Date;
@@ -9,6 +12,8 @@ public class AnoleProject {
 
     private String name;
 
+    private String description;
+
     private String creator;
 
     private String owner;
@@ -16,8 +21,6 @@ public class AnoleProject {
     private Date createTime;
 
     private Date updateTime;
-
-    private String description;
 
     public Integer getId() {
         return id;
@@ -41,6 +44,14 @@ public class AnoleProject {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 
     public String getCreator() {
@@ -73,13 +84,5 @@ public class AnoleProject {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
     }
 }
