@@ -47,7 +47,7 @@
       <property name="enableSubPackages" value="false" /> 
     </javaClientGenerator>
      
-    <table tableName="anole_config" domainObjectName="AnoleConfig"
+    <!--  <table tableName="anole_config" domainObjectName="AnoleConfig"
     	enableSelectByExample="true" 
     	enableCountByExample="true" 
 	    enableUpdateByExample="true" 
@@ -103,5 +103,29 @@
       > 
       <generatedKey column="id" sqlStatement="Mysql" identity="true"></generatedKey>
     </table> 
+    <table tableName="anole_boss" domainObjectName="AnoleBoss" 
+      enableCountByExample="true" 
+	  enableUpdateByExample="true" 
+	  enableDeleteByExample="true"
+      enableSelectByExample="true"  
+      > 
+      <generatedKey column="id" sqlStatement="Mysql" identity="true"></generatedKey>
+    </table>  --> 
+     <table tableName="anole_sys_set" domainObjectName="AnoleSysSetting" 
+      enableCountByExample="true" 
+	  enableUpdateByExample="true" 
+	  enableDeleteByExample="true"
+      enableSelectByExample="true"  
+      > 
+      <generatedKey column="id" sqlStatement="Mysql" identity="true"></generatedKey>
+    </table> 
+   <!-- <table tableName="anole_worker" domainObjectName="AnoleWorker" 
+      enableCountByExample="true" 
+	  enableUpdateByExample="true" 
+	  enableDeleteByExample="true"
+      enableSelectByExample="true"  
+      > 
+      <generatedKey column="id" sqlStatement="Mysql" identity="true"></generatedKey>
+    </table>  -->
   </context>
 </generatorConfiguration>

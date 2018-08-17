@@ -27,7 +27,7 @@ CREATE TABLE `anole_config` (
   `type` tinyint(3) unsigned zerofill NOT NULL DEFAULT '000' COMMENT '1: number(整数、小数), 2: bool型（开关） 3: 字符串型 4.JSON类型',
   `creator` varchar(255) NOT NULL DEFAULT '' COMMENT '创建者用户名',
   `last_operator` varchar(255) NOT NULL DEFAULT '' COMMENT '最后的修改者用户名',
-  `description` tinytext COMMENT '描述',
+  `description` varchar(2000) DEFAULT NULL COMMENT '描述',
   `project` varchar(255) NOT NULL DEFAULT '' COMMENT '所属项目名',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -54,7 +54,7 @@ CREATE TABLE `anole_config_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) NOT NULL DEFAULT '' COMMENT '配置值名',
   `env_name` varchar(10) NOT NULL DEFAULT '' COMMENT '配置所属环境',
-  `value` text NOT NULL COMMENT '配置值',
+  `value` varchar(5000) NOT NULL COMMENT '配置值',
   `last_operator` varchar(255) NOT NULL DEFAULT '' COMMENT '最后的修改者用户名',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -85,7 +85,7 @@ DROP TABLE IF EXISTS `anole_env`;
 CREATE TABLE `anole_env` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(10) NOT NULL DEFAULT '' COMMENT '环境名称',
-  `description` tinytext COMMENT '说明、描述',
+  `description` varchar(1000) DEFAULT NULL COMMENT '说明、描述',
   `last_operator` varchar(255) NOT NULL DEFAULT '' COMMENT '最后的修改者用户名',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -129,7 +129,7 @@ CREATE TABLE `anole_project` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_line` varchar(255) DEFAULT NULL COMMENT '产品线',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '项目名，全局唯一',
-  `description` tinytext COMMENT '描述',
+  `description` varchar(1000) DEFAULT NULL COMMENT '描述',
   `creator` varchar(255) NOT NULL DEFAULT '' COMMENT '创建者用户名',
   `owner` varchar(255) DEFAULT NULL COMMENT '拥有者用户名',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -143,6 +143,24 @@ CREATE TABLE `anole_project` (
 insert  into `anole_project`(`id`,`product_line`,`name`,`description`,`creator`,`owner`,`create_time`,`update_time`) values 
 
 (1,'order','order-main-service',NULL,'admin','admin','2017-02-16 09:44:29','2017-02-16 09:44:29');
+
+/*Table structure for table `anole_server` */
+
+DROP TABLE IF EXISTS `anole_server`;
+
+CREATE TABLE `anole_server` (
+  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` tinyint(5) NOT NULL COMMENT '类型',
+  `address` varchar(40) DEFAULT NULL,
+  `port` int(11) DEFAULT NULL,
+  `master` tinyint(5) DEFAULT NULL COMMENT '1-master 0-slave',
+  `status` tinyint(5) DEFAULT NULL COMMENT '0-stopped 1-running',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `anole_server` */
 
 /*Table structure for table `anole_user` */
 

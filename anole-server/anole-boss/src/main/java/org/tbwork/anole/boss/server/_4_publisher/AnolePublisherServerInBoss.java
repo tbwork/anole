@@ -1,14 +1,14 @@
-package org.tbwork.anole.boss.server._4_subscriber;
+package org.tbwork.anole.boss.server._4_publisher;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service; 
-import org.tbwork.anole.boss.server._4_subscriber.handler.AuthenticationHandler;
-import org.tbwork.anole.boss.server._4_subscriber.handler.ExceptionHandler;
-import org.tbwork.anole.boss.server._4_subscriber.handler.NewConnectionHandler;
-import org.tbwork.anole.boss.server._4_worker.AnoleWorkerManagerBossServer;
+import org.tbwork.anole.boss.server._4_publisher.handler.AuthenticationHandler;
+import org.tbwork.anole.boss.server._4_publisher.handler.ExceptionHandler;
+import org.tbwork.anole.boss.server._4_publisher.handler.MainLogicHandler;
+import org.tbwork.anole.boss.server._4_publisher.handler.NewConnectionHandler;
 import org.tbwork.anole.server.basic.server.AnoleServer;
 
 import com.google.common.base.Preconditions;
@@ -27,40 +27,41 @@ import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 
 /**
- * Anole subscriber's boss server only provides authentication
- * service for all subscriber clients. When a subscriber attempts
- * to connect to a worker server, it should connect to this server
- * to get the identification token in order to communicate with 
- * worker server.
+ * Anole publisher's boss server manages all publisher clients.
+ * It receives and processes all write requests from publishers.
  * @author tommy.tang
  */
-@Service("subscriberBossServer")
-public class AnoleSubscriberManagerBossServer implements AnoleServer{
+@Service("publisherServer")
+public class AnolePublisherServerInBoss implements AnoleServer{
 
-	private int port;
+	private int port; 
 	
 	volatile boolean started;
-	static final Logger logger = LoggerFactory.getLogger(AnoleSubscriberManagerBossServer.class);
+	static final Logger logger = LoggerFactory.getLogger(AnolePublisherServerInBoss.class);
 	Channel channel = null;
 	EventLoopGroup bossGroup = null;
 	EventLoopGroup workerGroup = null;  
 	@Autowired
-	@Qualifier("b4sAuthenticationHandler")
-	AuthenticationHandler authenticationHandler; 
+	@Qualifier("b4pAuthenticationHandler")
+	AuthenticationHandler authenticationHandler;
 	
 	@Autowired
-	@Qualifier("b4sNewConnectionHandler")
+	@Qualifier("b4pMainLogicHandler")
+	MainLogicHandler mainLogicHandler;
+	
+	@Autowired
+	@Qualifier("b4pNewConnectionHandler")
 	NewConnectionHandler newConnectionHandler;
 	
 	@Autowired
-	@Qualifier("b4sExceptionHandler")
+	@Qualifier("b4pExceptionHandler")
 	ExceptionHandler lowLevelExceptionHandler;
 	 
 	@Override
 	public void start(int port) {
 		if(!started) //DCL-1
 		{
-			synchronized(AnoleWorkerManagerBossServer.class)
+			synchronized(AnolePublisherServerInBoss.class)
 			{
 				if(!started)//DCL-2
 				{
@@ -74,7 +75,7 @@ public class AnoleSubscriberManagerBossServer implements AnoleServer{
 	public void close() {
 		if(started) //DCL-1
 		{
-			synchronized(AnoleSubscriberManagerBossServer.class)
+			synchronized(AnolePublisherServerInBoss.class)
 			{
 				if(started)//DCL-2
 				{
@@ -85,10 +86,9 @@ public class AnoleSubscriberManagerBossServer implements AnoleServer{
 	}
 
 	@Override
-	public int getPort() {
+	public int getPort() { 
 		return port;
-	} 
-	
+	}
 	
 	private void executeStart(int port){
 		Preconditions.checkArgument(port>0, "port should be > 0");
@@ -107,7 +107,8 @@ public class AnoleSubscriberManagerBossServer implements AnoleServer{
                     		 new ObjectEncoder(),
                     		 newConnectionHandler, 
                     		 new ObjectDecoder(ClassResolvers.cacheDisabled(null)), 
-                    		 authenticationHandler
+                    		 authenticationHandler, 
+                    		 mainLogicHandler
                     		 );
                  }
              })
@@ -119,12 +120,12 @@ public class AnoleSubscriberManagerBossServer implements AnoleServer{
              if(f.isSuccess())
              {    
             	 channel = f.channel();
-            	 logger.info("[:)] Anole boss server for subscriber started succesfully at local address (port = {}) !", port);
+            	 logger.info("[:)] Anole boss server for publisher started succesfully at local address (port = {}) !", port);
             	 started = true;
              }
 			 
         }catch(InterruptedException e){ 
-        	logger.error("[:(] Anole boss server for subscriber failed to start at port {}!", port);
+        	logger.error("[:(] Anole boss server for publisher failed to start at port {}!", port);
 			e.printStackTrace();
         }  
 	}
@@ -134,17 +135,17 @@ public class AnoleSubscriberManagerBossServer implements AnoleServer{
 			channel.disconnect();
 			channel.close(); 
 		} catch (Exception e) {
-			logger.error("[:(] Anole boss server for subscriber failed to close. Inner message: {}", e.getMessage());
+			logger.error("[:(] Anole boss server for publisher failed to close. Inner message: {}", e.getMessage());
 			e.printStackTrace();
 		}finally{ 
 			if(!channel.isActive())
 			{
-				logger.info("[:)] Anole boss server for subscriber closed successfully !");		
+				logger.info("[:)] Anole boss server for publisher closed successfully !");		
 				workerGroup.shutdownGracefully();
 		        bossGroup.shutdownGracefully();
 				started = false;
 			}
 		} 
 	}
-	
+
 }

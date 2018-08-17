@@ -1,18 +1,15 @@
 package org.tbwork.anole.boss.server._4_worker.handler;
 
-import java.lang.reflect.Constructor;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.tbwork.anole.boss.lccm.impl.WorkerClientManagerForBoss;
 import org.tbwork.anole.common.enums.ClientType;
-import org.tbwork.anole.common.message.Message;
 import org.tbwork.anole.common.message.MessageType;
-import org.tbwork.anole.common.message.c_2_s.CommonAuthenticationMessage; 
 import org.tbwork.anole.common.message.c_2_s.C2SMessage;
+import org.tbwork.anole.common.message.c_2_s.CommonAuthenticationMessage;
 import org.tbwork.anole.common.message.s_2_c.AuthFailAndCloseMessage;
 import org.tbwork.anole.common.message.s_2_c.AuthPassWithTokenMessage;
 import org.tbwork.anole.common.message.s_2_c.MatchFailAndCloseMessage;
@@ -21,17 +18,12 @@ import org.tbwork.anole.server.basic.model.requests.ValidateRequest;
 import org.tbwork.anole.server.basic.model.response.RegisterResult;
 import org.tbwork.anole.server.basic.server.util.ChannelHelper;
 import org.tbwork.anole.server.basic.service.IUserService;
-import org.tbwork.anole.boss.lccm.impl.WorkerClientManagerForBoss;  
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerAdapter;
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.util.ReferenceCountUtil;
-import io.netty.channel.ChannelHandler.Sharable;
 
 @Component("b4wAuthenticationHandler")
 @Sharable

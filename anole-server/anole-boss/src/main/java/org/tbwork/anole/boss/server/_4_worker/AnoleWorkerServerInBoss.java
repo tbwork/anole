@@ -36,12 +36,14 @@ import io.netty.handler.codec.serialization.ObjectEncoder;
  * @author tommy.tang
  */
 @Service
-public class AnoleWorkerManagerBossServer implements AnoleServer{
+public class AnoleWorkerServerInBoss implements AnoleServer{
 
 	private int port;
 	
 	volatile boolean started;
-	static final Logger logger = LoggerFactory.getLogger(AnoleWorkerManagerBossServer.class);
+	
+	static final Logger logger = LoggerFactory.getLogger(AnoleWorkerServerInBoss.class);
+	
 	Channel channel = null;
 	EventLoopGroup bossGroup = null;
 	EventLoopGroup workerGroup = null;  
@@ -65,7 +67,7 @@ public class AnoleWorkerManagerBossServer implements AnoleServer{
 	public void start(int port) {
 		if(!started) //DCL-1
 		{
-			synchronized(AnoleWorkerManagerBossServer.class)
+			synchronized(AnoleWorkerServerInBoss.class)
 			{
 				if(!started)//DCL-2
 				{
@@ -79,7 +81,7 @@ public class AnoleWorkerManagerBossServer implements AnoleServer{
 	public void close() {
 		if(started) //DCL-1
 		{
-			synchronized(AnoleWorkerManagerBossServer.class)
+			synchronized(AnoleWorkerServerInBoss.class)
 			{
 				if(started)//DCL-2
 				{

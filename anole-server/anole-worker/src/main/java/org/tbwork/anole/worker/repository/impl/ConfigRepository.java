@@ -13,8 +13,7 @@ import org.tbwork.anole.server.basic.exception.ConfigNotExistsException;
 import org.tbwork.anole.server.basic.model.ConfigDO;
 import org.tbwork.anole.server.basic.model.ConfigValueDO; 
 import org.tbwork.anole.server.basic.repository.ILockRepository;
-import org.tbwork.anole.server.basic.service.IConfigQueryService;
-import org.tbwork.anole.server.basic.util.ProjectUtil;
+import org.tbwork.anole.server.basic.service.IConfigQueryService; 
 import org.tbwork.anole.worker.repository.IConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -133,7 +132,7 @@ public class ConfigRepository implements IConfigRepository{
 		dmo.setKey(dpo.getKey());
 		dmo.setValue(dpo.getValue());
 		dmo.setLastOperator(dpo.getLastOperator()); 
-		dmo.setConfigType(configType);
+		dmo.setConfigType(configType); 
 		return dmo;
 	}
 	
@@ -143,6 +142,7 @@ public class ConfigRepository implements IConfigRepository{
 		dmo.setCreator(dpo.getCreator());
 		dmo.setDescription(dpo.getDescription()); 
 		dmo.setKey(dpo.getKey());
+		dmo.setProject(dpo.getProject());
 		dmo.setLastOpeartor(dpo.getLastOperator()); 
 		return dmo;
 	}
@@ -151,7 +151,7 @@ public class ConfigRepository implements IConfigRepository{
 		AnoleConfig dpo = new AnoleConfig(); 
 		dpo.setDescription(cdo.getDescription());
 		dpo.setKey(cdo.getKey());
-		dpo.setProject(ProjectUtil.getProjectName(cdo.getKey()));
+		dpo.setProject(cdo.getProject());
 		dpo.setType(cdo.getConfigType().code()); 
 		dpo.setLastOperator(cdo.getLastOpeartor()); 
 		return dpo;

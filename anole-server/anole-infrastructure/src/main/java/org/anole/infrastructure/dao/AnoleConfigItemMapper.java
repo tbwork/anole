@@ -19,21 +19,15 @@ public interface AnoleConfigItemMapper {
 
     int insertSelective(AnoleConfigItem record);
 
-    List<AnoleConfigItem> selectByExampleWithBLOBs(AnoleConfigItemExample example);
-
     List<AnoleConfigItem> selectByExample(AnoleConfigItemExample example);
 
     AnoleConfigItem selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") AnoleConfigItem record, @Param("example") AnoleConfigItemExample example);
 
-    int updateByExampleWithBLOBs(@Param("record") AnoleConfigItem record, @Param("example") AnoleConfigItemExample example);
-
     int updateByExample(@Param("record") AnoleConfigItem record, @Param("example") AnoleConfigItemExample example);
 
     int updateByPrimaryKeySelective(AnoleConfigItem record);
-
-    int updateByPrimaryKeyWithBLOBs(AnoleConfigItem record);
 
     int updateByPrimaryKey(AnoleConfigItem record);
 }

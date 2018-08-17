@@ -1,6 +1,7 @@
 package org.tbwork.anole.worker.client;
 
 import org.tbwork.anole.common.interfaces.IAnoleClient;
+import org.tbwork.anole.worker.model.BossInfo;
 
 
 /**
@@ -17,4 +18,6 @@ public interface IAnoleWorkerClient extends IAnoleClient{
      * Get the weight of worker.
      */
     public int getWeight();
+    
+    public BossInfo getTargetBoss();
 }

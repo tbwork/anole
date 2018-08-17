@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class ConfigDO{  
 	private String key; 
+	private String project;
 	private ConfigType configType;
 	private String description;  
 	private String creator;

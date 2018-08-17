@@ -12,13 +12,13 @@ public class AnoleConfigItem {
 
     private String envName;
 
+    private String value;
+
     private String lastOperator;
 
     private Date createTime;
 
     private Date updateTime;
-
-    private String value;
 
     public Integer getId() {
         return id;
@@ -44,6 +44,14 @@ public class AnoleConfigItem {
         this.envName = envName == null ? null : envName.trim();
     }
 
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value == null ? null : value.trim();
+    }
+
     public String getLastOperator() {
         return lastOperator;
     }
@@ -66,13 +74,5 @@ public class AnoleConfigItem {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value == null ? null : value.trim();
     }
 }

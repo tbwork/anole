@@ -11,14 +11,6 @@
         <mapper resource= "sqlMap/auto/AnoleUserMapper.xml" /> 
         <mapper resource= "sqlMap/auto/AnoleUserProjectMapMapper.xml" /> 
         
-        <!-- Manually -->
-        <mapper resource= "sqlMap/manual/AnoleConfigCombineMapper.xml" /> 
-        <mapper resource= "sqlMap/manual/AnoleConfigItemMapper.xml" /> 
-        <mapper resource= "sqlMap/manual/AnoleConfigMapper.xml" />
-        <mapper resource= "sqlMap/manual/AnoleEnvironmentMapper.xml" />  
-        <mapper resource= "sqlMap/manual/AnoleProductLineMapper.xml" />
-        <mapper resource= "sqlMap/manual/AnoleProjectMapper.xml" /> 
-        <mapper resource= "sqlMap/manual/AnoleUserMapper.xml" /> 
-        <mapper resource= "sqlMap/manual/AnoleUserProjectMapMapper.xml" /> 
+        <!-- Manually --> 
     </mappers >
 </configuration>

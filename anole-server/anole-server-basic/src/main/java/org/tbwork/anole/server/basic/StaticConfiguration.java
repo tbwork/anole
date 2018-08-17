@@ -19,6 +19,8 @@ public class StaticConfiguration {
 	public static final int EXPIRE_TIME = 60*60*1000 ;// ms  :  1 hour
 	public static final int CACHE_RECYCLE_INTERVAL = 60*1000; //ms  : 1min
 	public static final int ESTIMATED_INSERT_KEY_LIFETIME = 10*1000; //ms : 10s
+	public static final int SERVER_TOUCH_INTERVAL = 10*1000; //ms :10s
+	public static final int BOSS_DEFAULT_WEIGHT=5;
 	
 	/**
 	 * Use by server to manage workers 

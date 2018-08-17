@@ -1,35 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.anole.infrastructure.dao.AnoleProjectMapper">
-  <resultMap id="BaseResultMap" type="org.anole.infrastructure.model.AnoleProject">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="product_line" jdbcType="VARCHAR" property="productLine" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="owner" jdbcType="VARCHAR" property="owner" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.anole.infrastructure.dao.AnoleProjectMapper" >
+  <resultMap id="BaseResultMap" type="org.anole.infrastructure.model.AnoleProject" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_line" property="productLine" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="owner" property="owner" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -40,25 +40,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -69,41 +69,41 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, product_line, `name`, description, creator, `owner`, create_time, update_time
   </sql>
-  <select id="selectByExample" parameterType="org.anole.infrastructure.example.AnoleProjectExample" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.anole.infrastructure.example.AnoleProjectExample" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from anole_project
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from anole_project
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from anole_project
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.anole.infrastructure.example.AnoleProjectExample">
+  <delete id="deleteByExample" parameterType="org.anole.infrastructure.example.AnoleProjectExample" >
     delete from anole_project
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  <insert id="insert" parameterType="org.anole.infrastructure.model.AnoleProject" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into anole_project (product_line, `name`, description, 
@@ -113,97 +113,97 @@
       #{creator,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  <insert id="insertSelective" parameterType="org.anole.infrastructure.model.AnoleProject" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into anole_project
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="productLine != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productLine != null" >
         product_line,
       </if>
-      <if test="name != null">
+      <if test="name != null" >
         `name`,
       </if>
-      <if test="description != null">
+      <if test="description != null" >
         description,
       </if>
-      <if test="creator != null">
+      <if test="creator != null" >
         creator,
       </if>
-      <if test="owner != null">
+      <if test="owner != null" >
         `owner`,
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time,
       </if>
-      <if test="updateTime != null">
+      <if test="updateTime != null" >
         update_time,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="productLine != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="productLine != null" >
         #{productLine,jdbcType=VARCHAR},
       </if>
-      <if test="name != null">
+      <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="description != null">
+      <if test="description != null" >
         #{description,jdbcType=VARCHAR},
       </if>
-      <if test="creator != null">
+      <if test="creator != null" >
         #{creator,jdbcType=VARCHAR},
       </if>
-      <if test="owner != null">
+      <if test="owner != null" >
         #{owner,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null">
+      <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.anole.infrastructure.example.AnoleProjectExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="org.anole.infrastructure.example.AnoleProjectExample" resultType="java.lang.Integer" >
     select count(*) from anole_project
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update anole_project
-    <set>
-      <if test="record.id != null">
+    <set >
+      <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.productLine != null">
+      <if test="record.productLine != null" >
         product_line = #{record.productLine,jdbcType=VARCHAR},
       </if>
-      <if test="record.name != null">
+      <if test="record.name != null" >
         `name` = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.description != null">
+      <if test="record.description != null" >
         description = #{record.description,jdbcType=VARCHAR},
       </if>
-      <if test="record.creator != null">
+      <if test="record.creator != null" >
         creator = #{record.creator,jdbcType=VARCHAR},
       </if>
-      <if test="record.owner != null">
+      <if test="record.owner != null" >
         `owner` = #{record.owner,jdbcType=VARCHAR},
       </if>
-      <if test="record.createTime != null">
+      <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updateTime != null">
+      <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     update anole_project
     set id = #{record.id,jdbcType=INTEGER},
       product_line = #{record.productLine,jdbcType=VARCHAR},
@@ -213,38 +213,38 @@
       `owner` = #{record.owner,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.anole.infrastructure.model.AnoleProject">
+  <update id="updateByPrimaryKeySelective" parameterType="org.anole.infrastructure.model.AnoleProject" >
     update anole_project
-    <set>
-      <if test="productLine != null">
+    <set >
+      <if test="productLine != null" >
         product_line = #{productLine,jdbcType=VARCHAR},
       </if>
-      <if test="name != null">
+      <if test="name != null" >
         `name` = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="description != null">
+      <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
       </if>
-      <if test="creator != null">
+      <if test="creator != null" >
         creator = #{creator,jdbcType=VARCHAR},
       </if>
-      <if test="owner != null">
+      <if test="owner != null" >
         `owner` = #{owner,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null">
+      <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.anole.infrastructure.model.AnoleProject">
+  <update id="updateByPrimaryKey" parameterType="org.anole.infrastructure.model.AnoleProject" >
     update anole_project
     set product_line = #{productLine,jdbcType=VARCHAR},
       `name` = #{name,jdbcType=VARCHAR},
@@ -255,1126 +255,4 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <resultMap id="BaseResultMap" type="org.anole.infrastructure.model.AnoleProject">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="product_line" jdbcType="VARCHAR" property="productLine" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="owner" jdbcType="VARCHAR" property="owner" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, product_line, `name`, description, creator, `owner`, create_time, update_time
-  </sql>
-  <select id="selectByExample" parameterType="org.anole.infrastructure.example.AnoleProjectExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from anole_project
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="org.anole.infrastructure.example.AnoleProjectExample">
-    delete from anole_project
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anole_project (product_line, `name`, description, 
-      creator, `owner`, create_time, 
-      update_time)
-    values (#{productLine,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{creator,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anole_project
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="productLine != null">
-        product_line,
-      </if>
-      <if test="name != null">
-        `name`,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="creator != null">
-        creator,
-      </if>
-      <if test="owner != null">
-        `owner`,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="productLine != null">
-        #{productLine,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="creator != null">
-        #{creator,jdbcType=VARCHAR},
-      </if>
-      <if test="owner != null">
-        #{owner,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="org.anole.infrastructure.example.AnoleProjectExample" resultType="java.lang.Integer">
-    select count(*) from anole_project
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update anole_project
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.productLine != null">
-        product_line = #{record.productLine,jdbcType=VARCHAR},
-      </if>
-      <if test="record.name != null">
-        `name` = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.description != null">
-        description = #{record.description,jdbcType=VARCHAR},
-      </if>
-      <if test="record.creator != null">
-        creator = #{record.creator,jdbcType=VARCHAR},
-      </if>
-      <if test="record.owner != null">
-        `owner` = #{record.owner,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updateTime != null">
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update anole_project
-    set id = #{record.id,jdbcType=INTEGER},
-      product_line = #{record.productLine,jdbcType=VARCHAR},
-      `name` = #{record.name,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR},
-      creator = #{record.creator,jdbcType=VARCHAR},
-      `owner` = #{record.owner,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.anole.infrastructure.model.AnoleProject">
-    update anole_project
-    <set>
-      <if test="productLine != null">
-        product_line = #{productLine,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        `name` = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="creator != null">
-        creator = #{creator,jdbcType=VARCHAR},
-      </if>
-      <if test="owner != null">
-        `owner` = #{owner,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.anole.infrastructure.model.AnoleProject">
-    update anole_project
-    set product_line = #{productLine,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      creator = #{creator,jdbcType=VARCHAR},
-      `owner` = #{owner,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="org.anole.infrastructure.model.AnoleProject">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="product_line" jdbcType="VARCHAR" property="product_line" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="owner" jdbcType="VARCHAR" property="owner" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, product_line, `name`, description, creator, `owner`, create_time, update_time
-  </sql>
-  <select id="selectByExample" parameterType="org.anole.infrastructure.example.AnoleProjectExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from anole_project
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="org.anole.infrastructure.example.AnoleProjectExample">
-    delete from anole_project
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anole_project (product_line, `name`, description, 
-      creator, `owner`, create_time, 
-      update_time)
-    values (#{product_line,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{creator,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
-      #{update_time,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anole_project
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="product_line != null">
-        product_line,
-      </if>
-      <if test="name != null">
-        `name`,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="creator != null">
-        creator,
-      </if>
-      <if test="owner != null">
-        `owner`,
-      </if>
-      <if test="create_time != null">
-        create_time,
-      </if>
-      <if test="update_time != null">
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="product_line != null">
-        #{product_line,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="creator != null">
-        #{creator,jdbcType=VARCHAR},
-      </if>
-      <if test="owner != null">
-        #{owner,jdbcType=VARCHAR},
-      </if>
-      <if test="create_time != null">
-        #{create_time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="update_time != null">
-        #{update_time,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="org.anole.infrastructure.example.AnoleProjectExample" resultType="java.lang.Integer">
-    select count(*) from anole_project
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update anole_project
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.product_line != null">
-        product_line = #{record.product_line,jdbcType=VARCHAR},
-      </if>
-      <if test="record.name != null">
-        `name` = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.description != null">
-        description = #{record.description,jdbcType=VARCHAR},
-      </if>
-      <if test="record.creator != null">
-        creator = #{record.creator,jdbcType=VARCHAR},
-      </if>
-      <if test="record.owner != null">
-        `owner` = #{record.owner,jdbcType=VARCHAR},
-      </if>
-      <if test="record.create_time != null">
-        create_time = #{record.create_time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.update_time != null">
-        update_time = #{record.update_time,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update anole_project
-    set id = #{record.id,jdbcType=INTEGER},
-      product_line = #{record.product_line,jdbcType=VARCHAR},
-      `name` = #{record.name,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR},
-      creator = #{record.creator,jdbcType=VARCHAR},
-      `owner` = #{record.owner,jdbcType=VARCHAR},
-      create_time = #{record.create_time,jdbcType=TIMESTAMP},
-      update_time = #{record.update_time,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.anole.infrastructure.model.AnoleProject">
-    update anole_project
-    <set>
-      <if test="product_line != null">
-        product_line = #{product_line,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        `name` = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="creator != null">
-        creator = #{creator,jdbcType=VARCHAR},
-      </if>
-      <if test="owner != null">
-        `owner` = #{owner,jdbcType=VARCHAR},
-      </if>
-      <if test="create_time != null">
-        create_time = #{create_time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="update_time != null">
-        update_time = #{update_time,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.anole.infrastructure.model.AnoleProject">
-    update anole_project
-    set product_line = #{product_line,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      creator = #{creator,jdbcType=VARCHAR},
-      `owner` = #{owner,jdbcType=VARCHAR},
-      create_time = #{create_time,jdbcType=TIMESTAMP},
-      update_time = #{update_time,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="org.anole.infrastructure.model.AnoleProject">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="product_line" jdbcType="VARCHAR" property="product_line" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="owner" jdbcType="VARCHAR" property="owner" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anole_project (product_line, `name`, description, 
-      creator, `owner`, create_time, 
-      update_time)
-    values (#{product_line,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{creator,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
-      #{update_time,jdbcType=TIMESTAMP})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="org.anole.infrastructure.model.AnoleProject">
-    update anole_project
-    set product_line = #{product_line,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      creator = #{creator,jdbcType=VARCHAR},
-      `owner` = #{owner,jdbcType=VARCHAR},
-      create_time = #{create_time,jdbcType=TIMESTAMP},
-      update_time = #{update_time,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, product_line, `name`, description, creator, `owner`, create_time, update_time
-    from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, product_line, `name`, description, creator, `owner`, create_time, update_time
-    from anole_project
-  </select>
-  <resultMap id="BaseResultMap" type="org.anole.infrastructure.model.AnoleProject">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="product_line" jdbcType="VARCHAR" property="product_line" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="owner" jdbcType="VARCHAR" property="owner" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anole_project (product_line, `name`, description, 
-      creator, `owner`, create_time, 
-      update_time)
-    values (#{product_line,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{creator,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
-      #{update_time,jdbcType=TIMESTAMP})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="org.anole.infrastructure.model.AnoleProject">
-    update anole_project
-    set product_line = #{product_line,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      creator = #{creator,jdbcType=VARCHAR},
-      `owner` = #{owner,jdbcType=VARCHAR},
-      create_time = #{create_time,jdbcType=TIMESTAMP},
-      update_time = #{update_time,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, product_line, `name`, description, creator, `owner`, create_time, update_time
-    from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, product_line, `name`, description, creator, `owner`, create_time, update_time
-    from anole_project
-  </select>
-  <resultMap id="BaseResultMap" type="org.anole.infrastructure.model.AnoleProject">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="product_line" jdbcType="VARCHAR" property="product_line" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="owner" jdbcType="VARCHAR" property="owner" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anole_project (product_line, `name`, description, 
-      creator, `owner`, create_time, 
-      update_time)
-    values (#{product_line,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{creator,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
-      #{update_time,jdbcType=TIMESTAMP})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="org.anole.infrastructure.model.AnoleProject">
-    update anole_project
-    set product_line = #{product_line,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      creator = #{creator,jdbcType=VARCHAR},
-      `owner` = #{owner,jdbcType=VARCHAR},
-      create_time = #{create_time,jdbcType=TIMESTAMP},
-      update_time = #{update_time,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, product_line, `name`, description, creator, `owner`, create_time, update_time
-    from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, product_line, `name`, description, creator, `owner`, create_time, update_time
-    from anole_project
-  </select>
-  <resultMap id="BaseResultMap" type="org.anole.infrastructure.model.AnoleProject">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="product_line" jdbcType="VARCHAR" property="product_line" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="owner" jdbcType="VARCHAR" property="owner" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anole_project (product_line, `name`, description, 
-      creator, `owner`, create_time, 
-      update_time)
-    values (#{product_line,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{creator,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
-      #{update_time,jdbcType=TIMESTAMP})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="org.anole.infrastructure.model.AnoleProject">
-    update anole_project
-    set product_line = #{product_line,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      creator = #{creator,jdbcType=VARCHAR},
-      `owner` = #{owner,jdbcType=VARCHAR},
-      create_time = #{create_time,jdbcType=TIMESTAMP},
-      update_time = #{update_time,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, product_line, `name`, description, creator, `owner`, create_time, update_time
-    from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, product_line, `name`, description, creator, `owner`, create_time, update_time
-    from anole_project
-  </select>
-  <resultMap id="BaseResultMap" type="org.anole.infrastructure.model.AnoleProject">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="product_line" jdbcType="VARCHAR" property="product_line" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="owner" jdbcType="VARCHAR" property="owner" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anole_project (product_line, `name`, description, 
-      creator, `owner`, create_time, 
-      update_time)
-    values (#{product_line,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{creator,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
-      #{update_time,jdbcType=TIMESTAMP})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="org.anole.infrastructure.model.AnoleProject">
-    update anole_project
-    set product_line = #{product_line,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      creator = #{creator,jdbcType=VARCHAR},
-      `owner` = #{owner,jdbcType=VARCHAR},
-      create_time = #{create_time,jdbcType=TIMESTAMP},
-      update_time = #{update_time,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, product_line, `name`, description, creator, `owner`, create_time, update_time
-    from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, product_line, `name`, description, creator, `owner`, create_time, update_time
-    from anole_project
-  </select>
-  <resultMap id="BaseResultMap" type="org.anole.infrastructure.model.AnoleProject">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="product_line" jdbcType="VARCHAR" property="product_line" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="owner" jdbcType="VARCHAR" property="owner" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anole_project (product_line, `name`, description, 
-      creator, `owner`, create_time, 
-      update_time)
-    values (#{product_line,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{creator,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
-      #{update_time,jdbcType=TIMESTAMP})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="org.anole.infrastructure.model.AnoleProject">
-    update anole_project
-    set product_line = #{product_line,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      creator = #{creator,jdbcType=VARCHAR},
-      `owner` = #{owner,jdbcType=VARCHAR},
-      create_time = #{create_time,jdbcType=TIMESTAMP},
-      update_time = #{update_time,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, product_line, `name`, description, creator, `owner`, create_time, update_time
-    from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, product_line, `name`, description, creator, `owner`, create_time, update_time
-    from anole_project
-  </select>
-  <resultMap id="BaseResultMap" type="org.anole.infrastructure.model.AnoleProject">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="product_line" jdbcType="VARCHAR" property="product_line" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="owner" jdbcType="VARCHAR" property="owner" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, product_line, `name`, description, creator, `owner`, create_time, update_time
-  </sql>
-  <select id="selectByExample" parameterType="org.anole.infrastructure.example.AnoleProjectExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from anole_project
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="org.anole.infrastructure.example.AnoleProjectExample">
-    delete from anole_project
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anole_project (product_line, `name`, description, 
-      creator, `owner`, create_time, 
-      update_time)
-    values (#{product_line,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{creator,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
-      #{update_time,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anole_project
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="product_line != null">
-        product_line,
-      </if>
-      <if test="name != null">
-        `name`,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="creator != null">
-        creator,
-      </if>
-      <if test="owner != null">
-        `owner`,
-      </if>
-      <if test="create_time != null">
-        create_time,
-      </if>
-      <if test="update_time != null">
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="product_line != null">
-        #{product_line,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="creator != null">
-        #{creator,jdbcType=VARCHAR},
-      </if>
-      <if test="owner != null">
-        #{owner,jdbcType=VARCHAR},
-      </if>
-      <if test="create_time != null">
-        #{create_time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="update_time != null">
-        #{update_time,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="org.anole.infrastructure.example.AnoleProjectExample" resultType="java.lang.Integer">
-    select count(*) from anole_project
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update anole_project
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.product_line != null">
-        product_line = #{record.product_line,jdbcType=VARCHAR},
-      </if>
-      <if test="record.name != null">
-        `name` = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.description != null">
-        description = #{record.description,jdbcType=VARCHAR},
-      </if>
-      <if test="record.creator != null">
-        creator = #{record.creator,jdbcType=VARCHAR},
-      </if>
-      <if test="record.owner != null">
-        `owner` = #{record.owner,jdbcType=VARCHAR},
-      </if>
-      <if test="record.create_time != null">
-        create_time = #{record.create_time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.update_time != null">
-        update_time = #{record.update_time,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update anole_project
-    set id = #{record.id,jdbcType=INTEGER},
-      product_line = #{record.product_line,jdbcType=VARCHAR},
-      `name` = #{record.name,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR},
-      creator = #{record.creator,jdbcType=VARCHAR},
-      `owner` = #{record.owner,jdbcType=VARCHAR},
-      create_time = #{record.create_time,jdbcType=TIMESTAMP},
-      update_time = #{record.update_time,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.anole.infrastructure.model.AnoleProject">
-    update anole_project
-    <set>
-      <if test="product_line != null">
-        product_line = #{product_line,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        `name` = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="creator != null">
-        creator = #{creator,jdbcType=VARCHAR},
-      </if>
-      <if test="owner != null">
-        `owner` = #{owner,jdbcType=VARCHAR},
-      </if>
-      <if test="create_time != null">
-        create_time = #{create_time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="update_time != null">
-        update_time = #{update_time,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.anole.infrastructure.model.AnoleProject">
-    update anole_project
-    set product_line = #{product_line,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      creator = #{creator,jdbcType=VARCHAR},
-      `owner` = #{owner,jdbcType=VARCHAR},
-      create_time = #{create_time,jdbcType=TIMESTAMP},
-      update_time = #{update_time,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="org.anole.infrastructure.model.AnoleProject">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="product_line" jdbcType="VARCHAR" property="product_line" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="owner" jdbcType="VARCHAR" property="owner" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anole_project (product_line, `name`, description, 
-      creator, `owner`, create_time, 
-      update_time)
-    values (#{product_line,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{creator,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
-      #{update_time,jdbcType=TIMESTAMP})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="org.anole.infrastructure.model.AnoleProject">
-    update anole_project
-    set product_line = #{product_line,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      creator = #{creator,jdbcType=VARCHAR},
-      `owner` = #{owner,jdbcType=VARCHAR},
-      create_time = #{create_time,jdbcType=TIMESTAMP},
-      update_time = #{update_time,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, product_line, `name`, description, creator, `owner`, create_time, update_time
-    from anole_project
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, product_line, `name`, description, creator, `owner`, create_time, update_time
-    from anole_project
-  </select>
-  <resultMap id="BaseResultMap" type="org.anole.infrastructure.model.AnoleProject">
-    <id column="Id" jdbcType="INTEGER" property="id" />
-    <result column="ProductLine" jdbcType="VARCHAR" property="productLine" />
-    <result column="Name" jdbcType="VARCHAR" property="name" />
-    <result column="Creator" jdbcType="VARCHAR" property="creator" />
-    <result column="Owner" jdbcType="VARCHAR" property="owner" />
-    <result column="CreateTime" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="UpdateTime" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="Description" jdbcType="LONGVARCHAR" property="description" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from anole_project
-    where Id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="org.anole.infrastructure.model.AnoleProject">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anole_project (ProductLine, `Name`, Creator, 
-      `Owner`, CreateTime, UpdateTime, 
-      Description)
-    values (#{productLine,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
-      #{owner,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{description,jdbcType=LONGVARCHAR})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="org.anole.infrastructure.model.AnoleProject">
-    update anole_project
-    set ProductLine = #{productLine,jdbcType=VARCHAR},
-      `Name` = #{name,jdbcType=VARCHAR},
-      Creator = #{creator,jdbcType=VARCHAR},
-      `Owner` = #{owner,jdbcType=VARCHAR},
-      CreateTime = #{createTime,jdbcType=TIMESTAMP},
-      UpdateTime = #{updateTime,jdbcType=TIMESTAMP},
-      Description = #{description,jdbcType=LONGVARCHAR}
-    where Id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select Id, ProductLine, `Name`, Creator, `Owner`, CreateTime, UpdateTime, Description
-    from anole_project
-    where Id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select Id, ProductLine, `Name`, Creator, `Owner`, CreateTime, UpdateTime, Description
-    from anole_project
-  </select>
 </mapper>

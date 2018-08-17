@@ -6,6 +6,9 @@
 n:worker.weight=7
 
 #server configuration
-anole.server.boss.4publisher.port=54321,54322
-anole.server.boss.4subscriber.port=54323,54324
-anole.server.boss.4worker.port=54325,54326
+anole.server.boss.4subscriber.port=55555
+anole.server.boss.4publisher.port=55655
+## alias for boss
+anole.server.boss.alias=BossExample
+## weight of boss, high weight stands for high possibility being elected as a worker server. Default:5
+anole.server.boss.weight=5

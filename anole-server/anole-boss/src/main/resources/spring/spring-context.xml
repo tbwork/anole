@@ -11,7 +11,7 @@
        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
      <context:annotation-config /> 
-     <context:component-scan base-package="org.tbwork.anole.boss" />
+     <context:component-scan base-package="org.tbwork.anole" />
      <!-- <task:annotation-driven />  -->
      <task:annotation-driven scheduler="qbScheduler" mode="proxy"/>  
      <task:scheduler id="qbScheduler" pool-size="10"/>   

@@ -4,25 +4,36 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tbwork.anole.boss.util.StringUtil;
+import org.tbwork.anole.server.basic.server.IServerStarter;
+import org.tbwork.anole.server.basic.util.NetUtil;
  
-
-/**
- * Yes, Anole goes here.
- */ 
 @Service
-public class BossServer4SubscriberStarter
+public class BossServer4SubscriberStarter implements IServerStarter
 {  
 	private final static Logger logger = LoggerFactory.getLogger(BossServer4SubscriberStarter.class);
 	
 	@Autowired
-	private AnoleSubscriberManagerBossServer anoleSubscriberManagerBossServer;
+	private AnoleSubscriberServerInBoss anoleSubscriberManagerBossServer;
 	
-	private static final String DEFAULT_PORTS = "54323,54324"; 
-	 
-	public void run()
+	private static final Integer DEFAULT_PORTS = 55555; 
+	
+	private int port;
+	
+	@Override
+	public int getPort() {
+		return port;
+	} 
+	
+	@Override
+	public int run()
     {   
-    	int port = StringUtil.getPort("anole.server.boss.4subscriber.port", DEFAULT_PORTS); 
+    	int port = NetUtil.getPort("anole.server.boss.4subscriber.port", DEFAULT_PORTS); 
     	anoleSubscriberManagerBossServer.start(port);  
-    } 
+    	return port;
+    }
+
+	@Override
+	public void stop() {
+		anoleSubscriberManagerBossServer.close();
+	} 
 }

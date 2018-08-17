@@ -1,15 +1,15 @@
-package org.tbwork.anole.boss.server._4_publisher;
+package org.tbwork.anole.worker.server.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service; 
-import org.tbwork.anole.boss.server._4_publisher.handler.AuthenticationHandler;
-import org.tbwork.anole.boss.server._4_publisher.handler.ExceptionHandler;
-import org.tbwork.anole.boss.server._4_publisher.handler.MainLogicHandler;
-import org.tbwork.anole.boss.server._4_publisher.handler.NewConnectionHandler;
+import org.springframework.stereotype.Service;
 import org.tbwork.anole.server.basic.server.AnoleServer;
+import org.tbwork.anole.worker.server.handler.AuthenticationHandler;
+import org.tbwork.anole.worker.server.handler.ExceptionHandler;
+import org.tbwork.anole.worker.server.handler.MainLogicHandler;
+import org.tbwork.anole.worker.server.handler.NewConnectionHandler;
 
 import com.google.common.base.Preconditions;
 
@@ -26,42 +26,49 @@ import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 
-/**
- * Anole publisher's boss server manages all publisher clients.
- * It receives and processes all write requests from publishers.
- * @author tommy.tang
- */
-@Service("publisherServer")
-public class AnolePublisherManagerBossServer implements AnoleServer{
 
-	private int port; 
-	
+/**
+ * An subscriber server manages all the subscriber clients.
+ * A subscriber client can establish a long connection 
+ * with the AnolePushServer, and then continuously receive
+ * messages pushed by the server.The management of clients is
+ * maintained by the server which means the client do not
+ * worry about the waste of connection caused by the network
+ * problem or omitting to call "close()" method.
+ * @author Tommy.Tang
+ */ 
+@Service("subscriberServer")
+public class AnoleSubscriberServerInWorker implements AnoleServer{
+
 	volatile boolean started;
-	static final Logger logger = LoggerFactory.getLogger(AnolePublisherManagerBossServer.class);
+	static final Logger logger = LoggerFactory.getLogger(AnoleSubscriberServerInWorker.class);
 	Channel channel = null;
 	EventLoopGroup bossGroup = null;
-	EventLoopGroup workerGroup = null;  
+	EventLoopGroup workerGroup = null; 
+	
+	private int port; 
+	
 	@Autowired
-	@Qualifier("b4pAuthenticationHandler")
+	@Qualifier("w4sAuthenticationHandler")
 	AuthenticationHandler authenticationHandler;
 	
 	@Autowired
-	@Qualifier("b4pMainLogicHandler")
+	@Qualifier("w4sMainLogicHandler")
 	MainLogicHandler mainLogicHandler;
 	
 	@Autowired
-	@Qualifier("b4pNewConnectionHandler")
+	@Qualifier("w4sNewConnectionHandler")
 	NewConnectionHandler newConnectionHandler;
 	
 	@Autowired
-	@Qualifier("b4pExceptionHandler")
+	@Qualifier("w4sExceptionHandler")
 	ExceptionHandler lowLevelExceptionHandler;
-	 
+	
 	@Override
-	public void start(int port) {
+	public void start(int port){
 		if(!started) //DCL-1
 		{
-			synchronized(AnolePublisherManagerBossServer.class)
+			synchronized(AnoleSubscriberServerInWorker.class)
 			{
 				if(!started)//DCL-2
 				{
@@ -70,12 +77,13 @@ public class AnolePublisherManagerBossServer implements AnoleServer{
 			}
 		} 
 	}
-
+	
 	@Override
-	public void close() {
+	public void close()
+	{
 		if(started) //DCL-1
 		{
-			synchronized(AnolePublisherManagerBossServer.class)
+			synchronized(AnoleSubscriberServerInWorker.class)
 			{
 				if(started)//DCL-2
 				{
@@ -84,12 +92,6 @@ public class AnolePublisherManagerBossServer implements AnoleServer{
 			}
 		} 
 	}
-
-	@Override
-	public int getPort() { 
-		return port;
-	}
-	
 	private void executeStart(int port){
 		Preconditions.checkArgument(port>0, "port should be > 0");
 		this.port = port;
@@ -117,15 +119,13 @@ public class AnolePublisherManagerBossServer implements AnoleServer{
 
              // Bind and start to accept incoming connections. 
 			 ChannelFuture f = b.bind(port).sync(); 
-             if(f.isSuccess())
-             {    
+             if(f.isSuccess()){    
             	 channel = f.channel();
-            	 logger.info("[:)] Anole boss server for publisher started succesfully at local address (port = {}) !", port);
+            	 logger.info("[:)] Anole worker server started succesfully at local address (port = {}) !", port);
             	 started = true;
-             }
-			 
+             } 
         }catch(InterruptedException e){ 
-        	logger.error("[:(] Anole boss server for publisher failed to start at port {}!", port);
+        	logger.error("[:(] Anole worker server failed to start at port {}!", port);
 			e.printStackTrace();
         }  
 	}
@@ -135,17 +135,22 @@ public class AnolePublisherManagerBossServer implements AnoleServer{
 			channel.disconnect();
 			channel.close(); 
 		} catch (Exception e) {
-			logger.error("[:(] Anole boss server for publisher failed to close. Inner message: {}", e.getMessage());
+			logger.error("[:(] Anole worker server failed to close. Inner message: {}", e.getMessage());
 			e.printStackTrace();
 		}finally{ 
 			if(!channel.isActive())
 			{
-				logger.info("[:)] Anole boss server for publisher closed successfully !");		
+				logger.info("[:)] Anole worker server closed successfully !");		
 				workerGroup.shutdownGracefully();
 		        bossGroup.shutdownGracefully();
 				started = false;
 			}
 		} 
-	}
-
+	} 
+	
+	@Override
+	public int getPort() {
+		return port;
+	} 
+	
 }

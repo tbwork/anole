@@ -1,11 +1,19 @@
 package org.tbwork.anole.worker.client.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
+import org.tbwork.anole.server.basic.repository.ISettingService;
 import org.tbwork.anole.server.basic.server.AnoleServer;
+import org.anole.infrastructure.dao.AnoleBossMapper;
+import org.anole.infrastructure.dao.AnoleSysSettingMapper;
+import org.anole.infrastructure.example.AnoleBossExample;
+import org.anole.infrastructure.example.AnoleSysSettingExample;
+import org.anole.infrastructure.model.AnoleBoss;
+import org.anole.infrastructure.model.AnoleSysSetting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +30,9 @@ import org.tbwork.anole.worker.client.handler.ExceptionHandler;
 import org.tbwork.anole.worker.client.handler.OtherLogicHandler;
 import org.tbwork.anole.worker.exception.AuthenticationNotReadyException;
 import org.tbwork.anole.worker.exception.SocketChannelNotReadyException;
+import org.tbwork.anole.worker.model.BossInfo;
 import org.tbwork.anole.worker.server.lccm.SubscriberClientManagerForWorker;
+import org.tbwork.anole.worker.service.IWorkerRegisterService;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -50,6 +60,7 @@ import lombok.Setter;
 @Data
 @Service("workerClient")
 public class AnoleWorkerClient implements IAnoleWorkerClient{ 
+	
 	@Getter(AccessLevel.NONE)@Setter(AccessLevel.NONE) 
 	private volatile boolean started; 
 	@Getter(AccessLevel.NONE)@Setter(AccessLevel.NONE) 
@@ -61,37 +72,38 @@ public class AnoleWorkerClient implements IAnoleWorkerClient{
 	
 	@Autowired
     private IConnectionMonitor lcMonitor;  
-	
-	  
+	 
 	@Autowired
 	@Qualifier("subscriberWorkerServer")
 	private AnoleServer subscriberWorkerServer;
+	
+	@Autowired
+	private AnoleBossMapper anoleBossMapper;
+	
+	@Autowired
+	private ISettingService settingService;
+	
+	@Autowired
+	private IWorkerRegisterService workerRegisterService;
 	
 	@Autowired
 	private SubscriberClientManagerForWorker subscriberClientManagerForWorker;
 	
 	int clientId = 0; // assigned by the server
     int token = 0;    // assigned by the server 
-	
-    private Servers servers = new Servers();
+	 
+    private BossInfo targetBoss;
     
     /**
      * Used to detect disconnection
      */
-    private int ping_count = 0;
+    private int pingCount = 0;
     /**
      * Used to detect disconnection
      */
     private int MAX_PING_COUNT = 5; 
     
-    @PostConstruct
-    private void initialize(){
-    	String serversString = getProperty(ClientProperties.BOSS_2_WOKRER_SERVER_ADDRESS);
-    	String [] _servers = serversString.split(",");
-    	if(_servers.length < 2)
-    		throw new RuntimeException("At least two boss server were specified for sake of robustness! If you obstinately want to use only one, just specify two same addresses.");
-    	servers.setAddresses(Lists.newArrayList(_servers)); 
-    }
+    
     //Properties
     public static enum ClientProperties{ 
     	BOSS_2_WOKRER_SERVER_ADDRESS("anole.client.worker.boss.address", "localhost:54325,localhost:54326"),  
@@ -105,11 +117,7 @@ public class AnoleWorkerClient implements IAnoleWorkerClient{
     	}
     	
     }
-    
-    @Data
-    public static class Servers{ 
-    	private List<String> addresses;  
-    }
+     
     
     @Override
   	public void connect() {
@@ -177,35 +185,39 @@ public class AnoleWorkerClient implements IAnoleWorkerClient{
   	
    
   	private void executeConnect(){
-  		if(servers == null)
-  			throw new RuntimeException("Boss servers are not ready!");  
-  		for(String serverString : servers.getAddresses()){
-  			if(executeConnect(serverString))
-  				return ;
-  		} 
-  		throw new RuntimeException("No available boss server! Please make sure at least one boss is running and reachable!"); 
-  	}
+  		while(true) {
+  			targetBoss = getCurrentServingBoss();
+  	  		if(executeConnect(targetBoss)) { 
+  					break ;
+  			} 
+  	  		logger.warn("Current target boss is not reachable, trying to connect the other valid bosses.");
+  	  	    List<BossInfo> bosses = workerRegisterService.getValidBossServers();
+  	  	    for(BossInfo boss : bosses) {
+	  	  	    if(executeConnect(boss)) { 
+						break ;
+				} 
+  	  	    }
+  		}  
+    }
   	
   	/** 
   	 * @param address in the form of "ip:port"
   	 */
-  	private boolean executeConnect(String address)
+  	private boolean executeConnect(BossInfo bossInfo)
   	{ 
-  		Preconditions.checkNotNull (address, "address should be null.");
-  		Preconditions.checkArgument(address.contains(":"), "address should be in form of: ip:port.");
-  		String [] ip_port = address.split(":");
-  		boolean result  = executeConnect(ip_port[0], Integer.valueOf(ip_port[1]), this);
+  		Preconditions.checkNotNull (bossInfo, "address should be null.");  
+  		boolean result  = executeConnect(bossInfo.getAddress(), bossInfo.getPort(), this);
   		if(result)
-  			logger.debug("[:)] Connect to boss server ({}) successfully!", address);
+  			logger.debug("[:)] Connect to boss server ({}:{}) successfully!", bossInfo.getAddress(), bossInfo.getPort());
   		else
-  			logger.warn("[:(] Connect to boss server ({}) failed!", address);
+  			logger.warn("[:(] Connect to boss server ({}:{}) failed!", bossInfo.getAddress(), bossInfo.getPort());
   		return result;
   	}
   	
   	private boolean executeConnect(String host, int port, final IAnoleWorkerClient anoleWorkerClient)
   	{ 
   		Preconditions.checkNotNull (host  , "host should be null.");
-  		Preconditions.checkArgument(port>0, "port should be > 0"  );
+  		Preconditions.checkArgument(port > 0, "port should be > 0"  );
           EventLoopGroup workerGroup = new NioEventLoopGroup(); 
           try {
               Bootstrap b = new Bootstrap();
@@ -290,15 +302,15 @@ public class AnoleWorkerClient implements IAnoleWorkerClient{
     } 
     
     public void addPingCount(){
-    	ping_count ++;
+    	pingCount ++;
     }
     
     public void ackPing(){
-    	ping_count --;
+    	pingCount --;
     }
     
     public boolean canPing(){
-    	return ping_count <= MAX_PING_COUNT;
+    	return pingCount <= MAX_PING_COUNT;
     }
 
 
@@ -318,7 +330,16 @@ public class AnoleWorkerClient implements IAnoleWorkerClient{
 	public int getWeight() {
 		return Anole.getIntProperty("worker.weight", WorkerClientConfig.DEFAULT_WEIGHT); 
 	}
+
+
+	@Override
+	public BossInfo getTargetBoss() { 
+		return targetBoss;
+	}
     
-    
+    private BossInfo getCurrentServingBoss(){ 
+    	AnoleBoss anoleBoss = anoleBossMapper.selectByPrimaryKey(settingService.getServingBossId()); 
+    	return new BossInfo(anoleBoss.getId(), anoleBoss.getAddress(), anoleBoss.getPortForWorker());
+    }
     
 }
