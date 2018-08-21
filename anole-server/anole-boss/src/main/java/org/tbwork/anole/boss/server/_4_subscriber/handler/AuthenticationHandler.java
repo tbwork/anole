@@ -88,7 +88,7 @@ public class AuthenticationHandler extends SimpleChannelInboundHandler<C2SMessag
 	private AssignedWorkerInfoMessage assignWorker(final ClientType clientType, final String environment){
 		AssignedWorkerInfoMessage result = new AssignedWorkerInfoMessage();
 		WorkerClientSkeleton wc = null; 
-		if(clientType == ClientType.SUBSCRIBER) 
+		if(clientType == ClientType.SUBSCRIBER) // select the best suitable worker for the new customer
 			wc = wcm.selectBestWorkerForSubscriber(); 
 		if(wc == null){
 			result.setMessage("There is no suitable worker server yet, please try again later.");

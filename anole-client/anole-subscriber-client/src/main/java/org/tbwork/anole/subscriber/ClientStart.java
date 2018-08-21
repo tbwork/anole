@@ -54,7 +54,6 @@ public class ClientStart
     }
     
     public static void testLocalConfig(){
-    	
     	AnoleLoader anoleLoader = new AnoleClasspathLoader();
     	anoleLoader.load();
     	System.out.println(AnoleClient.getProperty("cs")); 

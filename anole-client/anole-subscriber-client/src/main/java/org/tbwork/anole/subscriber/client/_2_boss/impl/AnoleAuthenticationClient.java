@@ -69,6 +69,9 @@ public class AnoleAuthenticationClient implements IAnoleAuthenticationClient{
     
     private Servers servers;
 
+    /**
+     * Lock for subsciber itself.
+     */
     public static final Object lock = new Object();
     public static volatile boolean authenticating = false;
     private AnoleAuthenticationClient(){

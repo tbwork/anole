@@ -40,10 +40,16 @@ public class WorkerClientSkeleton extends LongConnectionClientSkeleton{
 	 */
 	private String identity;
 	
+	/**
+	 * true means waiting for response from the worker client.
+	 */
 	private volatile boolean processing;
 	
+	/**
+	 * true means response from the worker client.
+	 */
 	private volatile boolean giveup; 
-	
+ 
 	private volatile CustomerClient subscriber; 
 	
 	private Map<String,ValueChangeDTO> unNotifiedChangeMap = new HashMap<String,ValueChangeDTO>(); 

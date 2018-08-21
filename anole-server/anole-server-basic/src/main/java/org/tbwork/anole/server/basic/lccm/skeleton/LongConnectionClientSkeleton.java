@@ -10,8 +10,8 @@ import lombok.Setter;
 
 
 /**
- * . Skeleton means the fake instance
- * of client existing in server application.
+ * A skeleton means a virtual instance of client
+ * existing in server application.
  * @author tommy.tang
  */
 @Data

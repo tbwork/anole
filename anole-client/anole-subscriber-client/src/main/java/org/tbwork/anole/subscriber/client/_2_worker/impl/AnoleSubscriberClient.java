@@ -184,7 +184,7 @@ public class AnoleSubscriberClient implements IAnoleSubscriberClient{
                    		    new ObjectDecoder(ClassResolvers.cacheDisabled(null)),  
                     		ConfigChangeNotifyMessageHandler.instance(),
                     		new OtherLogicHandler()
-                    		);
+                    );
                 }
             }); 
             // Start the client.
