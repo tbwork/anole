@@ -19,7 +19,7 @@ Let's elaborate the two main procedures in Anole: how does one subscriber connec
 3. The subscriber connect to the target worker.
 4. The subscriber subscribes its interested configs in worker server. Then, the worker knows the subscriber's interested configs.
 
-Now let's see how subscriber retrieve the latest value of config when it is modified:
+Now let's see how subscribers retrieve the latest value of config when it is modified:
 1. User modify certain config via Anole-UI, this will call the inner publisher to push the change to the Boss. 
 2. The boss server receives the change and persists it on harddisk, and then it broadcast the change to all workers.
 3. Each worker server checks which subscribers are interested in this config, and then sends this change to all related subscribers.
