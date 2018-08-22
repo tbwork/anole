@@ -1,5 +1,5 @@
 # Hi, Anole
-Anole is a online real-time configuration managerment system. By using it, you can easily modify your configs referenced by a lot of distributed applications.
+Anole is a online real-time configuration managerment system. By using it, you can easily modify your configs referenced by a lot of distributed applications and those related applications can read the latest value of configs ASAP.
 
 ## Architecture
 ![](https://github.com/tbwork/anole/blob/master/architecture.png?raw=true)
