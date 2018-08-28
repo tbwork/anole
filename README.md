@@ -1,4 +1,4 @@
-# Hi, Anole
+# Hi, Anole ![](https://img.shields.io/badge/progress-testing-orange.svg)
 Anole is a online real-time configuration managerment system. By using it, you can easily modify your configs referenced by a lot of distributed applications and those related applications can read the latest value of configs ASAP.
 
 ## Architecture
