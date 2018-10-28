@@ -8,3 +8,6 @@ target/
 
 #ignore idea files
 .idea
+
+#sts files
+.factorypath

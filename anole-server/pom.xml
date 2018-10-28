@@ -10,7 +10,7 @@
   <name>anole-server</name>
   <url>http://maven.apache.org</url> 
   <modules>
-  	<module>anole-hub</module> 
+  	<module>anole-boss</module> 
     <module>anole-infrastructure</module>
     <module>anole-server-basic</module>
   </modules>

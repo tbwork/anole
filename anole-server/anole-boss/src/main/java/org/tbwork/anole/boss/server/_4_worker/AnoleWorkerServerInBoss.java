@@ -35,7 +35,7 @@ import io.netty.handler.codec.serialization.ObjectEncoder;
  * of connecting a worker server. 
  * @author tommy.tang
  */
-@Service
+@Service("workerServer")
 public class AnoleWorkerServerInBoss implements AnoleServer{
 
 	private int port;

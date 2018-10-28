@@ -3,13 +3,16 @@
 <configuration>
     <mappers >
     	<!-- Auto generated -->
+    	<mapper resource= "sqlMap/auto/AnoleBossMapper.xml" /> 
         <mapper resource= "sqlMap/auto/AnoleConfigItemMapper.xml" /> 
         <mapper resource= "sqlMap/auto/AnoleConfigMapper.xml" />
         <mapper resource= "sqlMap/auto/AnoleEnvironmentMapper.xml" />  
-        <mapper resource= "sqlMap/auto/AnoleProjectMapper.xml" /> 
         <mapper resource= "sqlMap/auto/AnoleProductLineMapper.xml" />
+        <mapper resource= "sqlMap/auto/AnoleProjectMapper.xml" /> 
+        <mapper resource= "sqlMap/auto/AnoleSysSettingMapper.xml" /> 
         <mapper resource= "sqlMap/auto/AnoleUserMapper.xml" /> 
-        <mapper resource= "sqlMap/auto/AnoleUserProjectMapMapper.xml" /> 
+        <mapper resource= "sqlMap/auto/AnoleUserProjectMapMapper.xml" />
+        <mapper resource= "sqlMap/auto/AnoleWorkerMapper.xml" /> 
         
         <!-- Manually --> 
     </mappers >

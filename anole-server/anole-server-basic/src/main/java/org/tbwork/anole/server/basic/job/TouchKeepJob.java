@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.tbwork.anole.server.basic.IAppStarter;
 import org.tbwork.anole.server.basic.StaticConfiguration;
 import org.tbwork.anole.server.basic.repository.ISettingService;
 import org.tbwork.anole.server.basic.server.AnoleServer;
@@ -18,11 +19,10 @@ public class TouchKeepJob {
 	@Autowired
 	private ISettingService settingService;
 	
-	@Autowired
-	@Qualifier("mainServer")
-	private AnoleServer anoleServer;
+	@Autowired 
+	private IAppStarter appStarter;
 	
-	private Integer untouchCount;
+	private Integer untouchCount = 0;
 	
 	@Scheduled(fixedDelay = StaticConfiguration.SERVER_TOUCH_INTERVAL)
 	public void run(){  
@@ -33,7 +33,7 @@ public class TouchKeepJob {
 			untouchCount ++;
 		}
 		if(untouchCount > settingService.getTouchStopCount()) {
-			anoleServer.close();
+			appStarter.stop();
 		}
 	}
 	

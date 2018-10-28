@@ -1,6 +1,3 @@
-/*
- - Copyright 1999-2016 Shanghai XiangTu Network Technology Co. Limit
-*/
 package org.anole.infrastructure.dao;
 
 import java.util.List;
@@ -9,7 +6,7 @@ import org.anole.infrastructure.model.AnoleSysSetting;
 import org.apache.ibatis.annotations.Param;
 
 public interface AnoleSysSettingMapper {
-    int countByExample(AnoleSysSettingExample example);
+    long countByExample(AnoleSysSettingExample example);
 
     int deleteByExample(AnoleSysSettingExample example);
 

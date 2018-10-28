@@ -3,6 +3,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 import org.tbwork.anole.boss.server._4_publisher.BossServer4PublisherStarter;
 import org.tbwork.anole.boss.server._4_subscriber.BossServer4SubscriberStarter;
 import org.tbwork.anole.boss.server._4_worker.BossServer4WorkerStarter;
@@ -18,6 +19,7 @@ import org.tbwork.anole.server.basic.util.NetUtil;
  * Yes, Anole goes here.
  */ 
 @AnoleConfigLocation()
+@Component
 public class AppStarter implements IAppStarter
 {  
 	private final static Logger logger = LoggerFactory.getLogger(AppStarter.class); 

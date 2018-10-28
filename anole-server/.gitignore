@@ -9,3 +9,6 @@ target/
 #ignore idea files
 .idea
 /bin/
+
+#sts files
+.factorypath

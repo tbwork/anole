@@ -1,6 +1,3 @@
-/*
- - Copyright 1999-2016 Shanghai XiangTu Network Technology Co. Limit
-*/
 package org.anole.infrastructure.example;
 
 import java.util.ArrayList;
@@ -15,7 +12,7 @@ public class AnoleSysSettingExample {
     protected List<Criteria> oredCriteria;
 
     public AnoleSysSettingExample() {
-        oredCriteria = new ArrayList<Criteria>();
+        oredCriteria = new ArrayList<>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -72,7 +69,7 @@ public class AnoleSysSettingExample {
 
         protected GeneratedCriteria() {
             super();
-            criteria = new ArrayList<Criterion>();
+            criteria = new ArrayList<>();
         }
 
         public boolean isValid() {

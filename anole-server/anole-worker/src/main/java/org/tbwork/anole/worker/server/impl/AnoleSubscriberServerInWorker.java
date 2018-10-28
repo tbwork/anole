@@ -37,7 +37,7 @@ import io.netty.handler.codec.serialization.ObjectEncoder;
  * problem or omitting to call "close()" method.
  * @author Tommy.Tang
  */ 
-@Service("subscriberServer")
+@Service("subscriberWorkerServer")
 public class AnoleSubscriberServerInWorker implements AnoleServer{
 
 	volatile boolean started;
