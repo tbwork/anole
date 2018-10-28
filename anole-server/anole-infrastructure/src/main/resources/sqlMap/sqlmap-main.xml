@@ -15,5 +15,6 @@
         <mapper resource= "sqlMap/auto/AnoleWorkerMapper.xml" /> 
         
         <!-- Manually --> 
+        <mapper resource= "sqlMap/manual/AnoleConfigComplexMapper.xml" /> 
     </mappers >
 </configuration>

@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.anole.infrastructure.dao.AnoleConfigCombineMapper;
+ 
 import org.anole.infrastructure.dao.AnoleConfigItemMapper;
 import org.anole.infrastructure.dao.AnoleConfigMapper;
+import org.anole.infrastructure.dao.ext.AnoleConfigComplexMapper;
+import org.anole.infrastructure.example.AnoleConfigExample;
+import org.anole.infrastructure.example.AnoleConfigItemExample;
 import org.anole.infrastructure.model.AnoleConfig;
 import org.anole.infrastructure.model.AnoleConfigItem;
-import org.anole.infrastructure.model.custom.AnoleConfigCombine;
+import org.anole.infrastructure.model.custom.AnoleConfigDetail;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,7 +50,7 @@ public class ConfigService implements IConfigService {
 	private AnoleConfigMapper anoleConfigMapper;
 	
 	@Autowired
-	private AnoleConfigCombineMapper anoleConfigCombineMapper;
+	private AnoleConfigComplexMapper anoleConfigComplexMapper;
 	
 	@Autowired
 	private IUserService us;
@@ -71,12 +73,12 @@ public class ConfigService implements IConfigService {
 		List<ConfigBrief> cachedData = lc.get(cacheKey);
 		if(cachedData == null){
 			cachedData = new ArrayList<ConfigBrief>();
-			List<AnoleConfigCombine> dbData = anoleConfigCombineMapper.selectConfigsByProjectAndEnv(demand.getProject(), demand.getEnv());
-			for(AnoleConfigCombine item : dbData ){
+			List<AnoleConfigDetail> records = anoleConfigComplexMapper.selectConfigsByProjectAndEnv(demand.getProject(), demand.getEnv());
+			for(AnoleConfigDetail item : records){
 				cachedData.add(convert2Config(item));
 			}
 			lc.set(cacheKey, cachedData, 5*1000);// five second
-		}
+		} 
 		int permission = pers.getUserRole(demand.getProject(), demand.getOperator(), demand.getEnv()); 
 		if(permission == 0){
 			for(ConfigBrief item: cachedData){
@@ -129,9 +131,11 @@ public class ConfigService implements IConfigService {
 		return result;
 	}
 
-	private boolean checkExists(String key){
-		AnoleConfig anoleConfig = anoleConfigMapper.selectByConfigKey(key);
-		return anoleConfig != null;
+	private boolean checkExists(String key){ 
+		AnoleConfigExample ace = new AnoleConfigExample();
+		ace.createCriteria().andKeyEqualTo(key);
+		List<AnoleConfig> anoleConfigs = anoleConfigMapper.selectByExample(ace);
+		return anoleConfigs != null && !anoleConfigs.isEmpty();
 	}
 	
 	@Override
@@ -166,30 +170,36 @@ public class ConfigService implements IConfigService {
 
 	@Override
 	public ConfigBrief getConfigByKeyAndEnv(String key,String env) { 
-		ConfigBrief config = null;
-		AnoleConfigItem ci = anoleConfigItemMapper.selectByConfigKeyAndEnv(key, env);
-		AnoleConfig ac = anoleConfigMapper.selectByConfigKey(key);
-		if(ci != null){
-			config = new ConfigBrief();
-			config.setDesc(ac.getDescription());
-			config.setEnv(env);
-			config.setKey(key);
-			config.setLastModifier(ci.getLastOperator());
-			config.setType(ac.getType());
-			config.setValue(ci.getValue());
+		ConfigBrief brief = null;
+		AnoleConfigItemExample anoleConfigItemExample = new AnoleConfigItemExample();
+		anoleConfigItemExample.createCriteria().andKeyEqualTo(key).andEnvNameEqualTo(env);
+		List<AnoleConfigItem> items = anoleConfigItemMapper.selectByExample(anoleConfigItemExample);
+		AnoleConfigExample anoleConfigExample = new AnoleConfigExample();
+		anoleConfigExample.createCriteria().andKeyEqualTo(key);
+		List<AnoleConfig> configs = anoleConfigMapper.selectByExample(anoleConfigExample);
+		if(configs != null && !configs.isEmpty() && items!=null && !items.isEmpty()){
+			AnoleConfig tempConfig = configs.get(0);
+			AnoleConfigItem tempConfigItem = items.get(0);
+			brief = new ConfigBrief();
+			brief.setDesc(tempConfig.getDescription());
+			brief.setEnv(env);
+			brief.setKey(key);
+			brief.setLastModifier(tempConfigItem.getLastOperator());
+			brief.setType(tempConfig.getType());
+			brief.setValue(tempConfigItem.getValue());
 		} 
-		return config;
+		return brief;
 	}
  
 	
-	private ConfigBrief convert2Config(AnoleConfigCombine acc){
+	private ConfigBrief convert2Config(AnoleConfigDetail acd){
 		ConfigBrief result = new ConfigBrief();
-		result.setDesc(acc.getDescription());
-		result.setEnv(acc.getEnvName());
-		result.setKey(acc.getKey());
-		result.setLastModifier(acc.getLastOperator());
-		result.setType(acc.getType());
-		result.setValue(acc.getValue());
+		result.setDesc(acd.getDescription());
+		result.setEnv(acd.getEnvName());
+		result.setKey(acd.getKey());
+		result.setLastModifier(acd.getLastOperator());
+		result.setType(acd.getType());
+		result.setValue(acd.getValue());
 		return result;
 	}
 	

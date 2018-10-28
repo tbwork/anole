@@ -13,7 +13,7 @@ public class CacheKeys {
 	public static final String SEARCH_RESULT_KEY ="search_result_cache";
 	
 	public static String buildConfigsForProjectKey(String project, String env){
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder(); 
 		sb.append(PROJECT_CONFIGS_PREFIX).append("-").append(project).append(env);
 		return sb.toString();
 	}

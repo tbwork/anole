@@ -1,12 +1,12 @@
 package org.anole.infrastructure.model.custom;
 
-public class AnoleConfigCombine { 
+public class AnoleConfigDetail { 
 	private String key;
 	private int type;
 	private String project;
 	private String value;
+	private String envName; 
 	private String description;
-	private String envName;
 	private String lastOperator;
 	public String getKey() {
 		return key;

@@ -31,7 +31,7 @@ public class AuthorizationService implements IAuthorizationService {
 		if(operator.equals("admin"))
 			return;
 		if(operation == Operation.ASSIGN_PERMISSION)// project's owner can assign the permission of accessing the project
-		{
+		{  
 			AnoleProject ap = anoleProjectMapper.selectByName(project);
 			if(ap == null || !ap.getOwner().equals(operator))
 				throw new OperatorNoRightException();

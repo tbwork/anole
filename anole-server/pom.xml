@@ -13,6 +13,8 @@
   	<module>anole-boss</module> 
     <module>anole-infrastructure</module>
     <module>anole-server-basic</module>
+	<module>anole-web</module>
+	<module>anole-worker</module>
   </modules>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

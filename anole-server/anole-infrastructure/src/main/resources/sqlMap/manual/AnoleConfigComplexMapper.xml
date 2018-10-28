@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.anole.infrastructure.dao.AnoleConfigItemMapper" >
+  <resultMap id="ConfigDetailResultMap" type="org.anole.infrastructure.model.custom.AnoleConfigDetail" >
+    <result column="key" property="key" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="project" property="project" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="env_name" property="envName" jdbcType="VARCHAR" /> 
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="last_operator" property="lastOperator" jdbcType="VARCHAR" /> 
+  </resultMap>
+   
+  <select id="selectConfigsByProjectAndEnv" resultMap="ConfigDetailResultMap">
+    SELECT A.`key`, B.`type`, B.`project`, A.`value`, A.`env_name`, B.`description`, A.`last_operator` 
+    FROM  anole.anole_config_item as A left join anole.anole_config as B on A.`key` = B.`key` 
+    WHERE  B.`project` = #{project,jdbcType=VARCHAR} AND A.`env_name` = #{env,jdbcType=VARCHAR}
+    where id = 
+  </select>
+  
+</mapper>

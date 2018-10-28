@@ -13,6 +13,7 @@ import java.util.Set;
 
 import org.anole.infrastructure.dao.AnoleConfigItemMapper;
 import org.anole.infrastructure.dao.AnoleConfigMapper;
+import org.anole.infrastructure.example.AnoleConfigExample;
 import org.anole.infrastructure.model.AnoleConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -159,7 +160,9 @@ public class ConfigSearchService implements IConfigSearchService{
 	@Override
 	public void deltaUpdate() {
 		while(true){
-			List<AnoleConfig> configs = anoleConfigMapper.selectConfigsByUpdatedTime(configLastUpdatetime);
+			AnoleConfigExample anoleConfigExample = new AnoleConfigExample();
+			anoleConfigExample.createCriteria().andUpdateTimeGreaterThan(configLastUpdatetime);
+			List<AnoleConfig> configs = anoleConfigMapper.selectByExample(anoleConfigExample);
 			if(configs!=null && !configs.isEmpty()){
 				for(AnoleConfig anoleConfig : configs){
 					if(!configMap.containsKey(anoleConfig.getKey())){
@@ -178,7 +181,7 @@ public class ConfigSearchService implements IConfigSearchService{
 				}
 			}
 			else{
-				logger.info("Loading updated configs successfully! The last config's updatetime is {}", configLastUpdatetime);
+				logger.info("Loading updated configs successfully! The latest config's updatetime is {}", configLastUpdatetime);
 				break;
 			}
 		}
