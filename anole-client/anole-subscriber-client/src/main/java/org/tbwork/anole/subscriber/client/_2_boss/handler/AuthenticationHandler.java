@@ -2,9 +2,8 @@ package org.tbwork.anole.subscriber.client._2_boss.handler;
  
  
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler; 
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.ReferenceCountUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tbwork.anole.common.enums.ClientType;
@@ -14,9 +13,9 @@ import org.tbwork.anole.common.message.c_2_s.CommonAuthenticationMessage;
 import org.tbwork.anole.common.message.c_2_s.subscriber._2_boss.S2BCommonAuthenticationMessage;
 import org.tbwork.anole.common.message.s_2_c.boss.AssignedWorkerInfoMessage;
 import org.tbwork.anole.loader.context.Anole;
+import org.tbwork.anole.loader.context.AnoleApp;
 import org.tbwork.anole.subscriber.client._2_boss.impl.AnoleAuthenticationClient;
 import org.tbwork.anole.subscriber.client._2_worker.impl.AnoleSubscriberClient;
-import org.tbwork.anole.subscriber.core.AnoleClient; 
 public class AuthenticationHandler extends  SimpleChannelInboundHandler<Message>  {
 
 	static final Logger logger = LoggerFactory.getLogger(AuthenticationHandler.class);
@@ -32,7 +31,7 @@ public class AuthenticationHandler extends  SimpleChannelInboundHandler<Message>
     	authBody.setUsername(Anole.getProperty("anole.client.subscriber.username","tangbo"));
     	authBody.setPassword(Anole.getProperty("anole.client.subscriber.password", "123")); 
     	authBody.setClientType(ClientType.SUBSCRIBER);
-    	authBody.setEnvironment(Anole.getCurrentEnvironment());
+    	authBody.setEnvironment(AnoleApp.getEnvironment());
     	return authBody;
 	}
 

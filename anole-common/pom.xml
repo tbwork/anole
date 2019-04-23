@@ -18,7 +18,6 @@
     <netty.version>5.0.0.Alpha1</netty.version>
     <junit.version>4.12</junit.version>
     <lombok.version>1.16.8</lombok.version>
-    <anole.loader.version>1.2.4</anole.loader.version>
   </properties>
 
   <dependencies>
@@ -32,16 +31,21 @@
 		<groupId>org.projectlombok</groupId>
 		<artifactId>lombok</artifactId>
 		<version>${lombok.version}</version>
-	</dependency> 
-	<dependency>
+	</dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.26</version>
+    </dependency>
+    <dependency>
+      <groupId>org.tbwork.anole</groupId>
+      <artifactId>anole-loader</artifactId>
+      <version>1.2.9</version>
+    </dependency>
+    <dependency>
         <groupId>io.netty</groupId>
         <artifactId>netty-all</artifactId>
         <version>${netty.version}</version>
     </dependency>
-	<dependency>
-		<groupId>org.tbwork.anole</groupId>
-		<artifactId>anole-loader</artifactId>
-		<version>${anole.loader.version}</version>
-	</dependency>
   </dependencies>
 </project>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>4.12</junit.version>
+        <logback.version>1.1.7</logback.version>
+        <org.springframework.version>3.2.8.RELEASE</org.springframework.version>
+        <anole.client.basic.version>0.0.1-SNAPSHOT</anole.client.basic.version>
+        <anole.common.version>0.0.1-SNAPSHOT</anole.common.version>
+        <anole.dal.version>0.0.1-SNAPSHOT</anole.dal.version>
+        <anole.basic.version>0.0.1-SNAPSHOT</anole.basic.version>
+        <anole.server.version>0.0.1-SNAPSHOT</anole.server.version>
+    </properties>
+
+    <groupId>org.tbwork.anole</groupId>
+    <artifactId>anole-server</artifactId>
+    <version>${anole.server.version}</version>
+    <packaging>pom</packaging>
+
+    <name>anole-server</name>
+    <url>http://maven.apache.org</url>
+    <modules>
+        <module>anole-boss</module>
+        <module>anole-worker</module>
+        <module>anole-server-common</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.tbwork.anole</groupId>
+                <artifactId>anole-dal</artifactId>
+                <version>${anole.dal.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tbwork.anole</groupId>
+                <artifactId>anole-basic</artifactId>
+                <version>${anole.basic.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tbwork.anole</groupId>
+                <artifactId>anole-common</artifactId>
+                <version>${anole.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tbwork.anole</groupId>
+                <artifactId>anole-server-common</artifactId>
+                <version>${anole.server.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tbwork.anole</groupId>
+                <artifactId>anole-client-basic</artifactId>
+                <version>${anole.client.basic.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

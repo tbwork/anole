@@ -16,51 +16,61 @@
     <anole.common.version>0.0.1-SNAPSHOT</anole.common.version>
     <logback.version>1.1.7</logback.version> 
     <google.guava>19.0</google.guava>
+    <fastjson.version>1.2.56</fastjson.version>
   </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>io.netty</groupId>
-        <artifactId>netty-all</artifactId>
-        <version>${netty.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.tbwork.anole</groupId>
-        <artifactId>anole-common</artifactId>
-        <version>${anole.common.version}</version>
-    </dependency> 
-    <dependency>
-		<groupId>ch.qos.logback</groupId>
-		<artifactId>logback-classic</artifactId>
-		<version>${logback.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>com.google.guava</groupId>
-		<artifactId>guava</artifactId>
-		<version>${google.guava}</version>
-	</dependency>  
-  </dependencies>
   <modules> 
   	<module>anole-publisher-client</module>
   	<module>anole-subscriber-client</module>
     <module>anole-client-basic</module>
   </modules>
-  <build>  
-    <plugins>  
-        <plugin>  
-            <groupId>org.apache.maven.plugins</groupId>  
-            <artifactId>maven-compiler-plugin</artifactId>  
-            <configuration>  
-                <source>1.7</source>  
-                <target>1.7</target>  
-            </configuration>  
-        </plugin>  
-    </plugins>  
-  </build>  
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tbwork.anole</groupId>
+                <artifactId>anole-common</artifactId>
+                <version>${anole.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${google.guava}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+      <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+      </build>
 </project>

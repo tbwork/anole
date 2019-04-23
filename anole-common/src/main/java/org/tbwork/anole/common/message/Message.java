@@ -1,14 +1,14 @@
 package org.tbwork.anole.common.message;
 
-import java.io.Serializable;
-
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.AccessLevel;
+
+import java.io.Serializable;
 
 @Data
-public abstract class Message implements Serializable {  
+public class Message<T> implements Serializable {
 	
 	/**
 	 * Type of Message. 
@@ -16,11 +16,17 @@ public abstract class Message implements Serializable {
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
 	private MessageType msgType;
-	
-	public Message(){};
-	
+	@Getter(AccessLevel.NONE)
+	@Setter(AccessLevel.NONE)
+	private T body;
+
 	public Message(MessageType msgType){
 		this.msgType = msgType;
+	}
+
+	public Message(MessageType msgType, T body){
+		this.msgType = msgType;
+		this.body = body;
 	}
 	
 	/**
@@ -29,6 +35,11 @@ public abstract class Message implements Serializable {
 	public MessageType getType()
 	{
 		return msgType;
+	}
+
+
+	public T getBody(){
+		return body;
 	}
 	
 }

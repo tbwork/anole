@@ -2,6 +2,16 @@ package org.tbwork.anole.common.message;
 
 public enum MessageType {
 
+	VOID, // 无需返回
+
+	/**
+	 *
+	 */
+	C2S_ASK_FOR_SERVICE,
+
+
+
+
 	S2C_AUTH_FIRST, // 服务端要求客户端先验证身份
 	S2C_AUTH_PASS,  // 通知客户端通过了身份验证并且分配token
 	S2C_AUTH_FAIL_CLOSE,  

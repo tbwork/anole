@@ -1,36 +1,18 @@
 package org.tbwork.anole.subscriber.core.impl;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.Provider;
-import java.security.Security;
-import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
-import javax.crypto.KeyGenerator;
-
+import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory; 
-import org.tbwork.anole.loader.types.ConfigType;
+import org.slf4j.LoggerFactory;
 import org.tbwork.anole.common.message.c_2_s.subscriber._2_worker.GetConfigMessage;
+import org.tbwork.anole.loader.context.AnoleApp;
 import org.tbwork.anole.loader.core.manager.impl.LocalConfigManager;
 import org.tbwork.anole.loader.core.model.ConfigItem;
-import org.tbwork.anole.loader.exceptions.ErrorSyntaxException;
-import org.tbwork.anole.loader.util.StringUtil;
+import org.tbwork.anole.loader.types.ConfigType;
 import org.tbwork.anole.subscriber.client._2_worker.impl.AnoleSubscriberClient;
 import org.tbwork.anole.subscriber.core.AnoleClient;
-import org.tbwork.anole.subscriber.exceptions.RetrieveConfigTimeoutException;
 import org.tbwork.anole.subscriber.util.GlobalConfig;
 
-import com.google.common.base.Preconditions;
+import java.util.concurrent.*;
  
 /**
  * This class provides management for remote configuration
@@ -102,7 +84,7 @@ public class SubscriberConfigManager extends LocalConfigManager{
 					  try {  
 							 Future<Integer> getConfigResult = executorService.submit( new Callable<Integer>(){ 
 									public Integer call() throws Exception {  
-										  anoleSubscriberClient.sendMessage( new GetConfigMessage(cItem.getKey(), AnoleClient.getCurrentEnvironment()));
+										  anoleSubscriberClient.sendMessage( new GetConfigMessage(cItem.getKey(), AnoleApp.getEnvironment()));
 										  if(logger.isDebugEnabled())
 											  logger.debug("GetConfigMessage (key = {}) sent successfully. Enter waiting...", cItem.getKey());
 										  synchronized(cItem.getKey())  {
@@ -146,7 +128,7 @@ public class SubscriberConfigManager extends LocalConfigManager{
 					  if(!cItem.isLoaded()){
 						  synchronized(cItem){ 
 							  if(!cItem.isLoaded()){
-								  anoleSubscriberClient.sendMessage( new GetConfigMessage(cItem.getKey(), AnoleClient.getCurrentEnvironment()));
+								  anoleSubscriberClient.sendMessage( new GetConfigMessage(cItem.getKey(), AnoleApp.getEnvironment()));
 								  if(logger.isDebugEnabled())
 									  logger.debug("GetConfigMessage (key = {}) sent successfully. Enter waiting...", cItem.getKey());
 								  synchronized(cItem.getKey())  {

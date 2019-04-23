@@ -13,26 +13,24 @@
   <name>anole-subscriber-client</name>
   <url>http://maven.apache.org</url>
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
-     <fastjson.version>1.1.15</fastjson.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
      <servlet.api.version>2.5</servlet.api.version> 
   </properties>
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency> 
-	<dependency>
-		<groupId>com.alibaba</groupId>
-		<artifactId>fastjson</artifactId>
-		<version>${fastjson.version}</version>
-	</dependency> 
-	<dependency>
+      <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>3.8.1</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>com.alibaba</groupId>
+          <artifactId>fastjson</artifactId>
+      </dependency>
+      <dependency>
 		<groupId>javax.servlet</groupId>
 		<artifactId>servlet-api</artifactId>
 		<version>${servlet.api.version}</version>
-	</dependency>
+      </dependency>
   </dependencies>
 </project>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.tbwork.anole</groupId>
+    <artifactId>anole-basic</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+
+    <properties>
+        <anole.loader.version>1.2.10-SNAPSHOT</anole.loader.version>
+        <anole.common.version>0.0.1-SNAPSHOT</anole.common.version>
+        <google.guava.version>19.0</google.guava.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.tbwork.anole</groupId>
+            <artifactId>anole-loader</artifactId>
+            <version>${anole.loader.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.tbwork.anole</groupId>
+            <artifactId>anole-common</artifactId>
+            <version>${anole.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${google.guava.version}</version>
+        </dependency>
+
+    </dependencies>
+
+</project>
